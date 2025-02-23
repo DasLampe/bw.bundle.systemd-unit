@@ -2,7 +2,7 @@ files = {}
 svc_systemd = {}
 
 actions = {
-    'systemctl-daemon-reload': {
+    'systemd-unit_systemctl-daemon-reload': {
         'command': 'systemctl daemon-reload',
         'triggered': True,
         'needs': [
@@ -25,7 +25,7 @@ for name, config in node.metadata.get('systemd-unit', {}).items():
         'group': config.get('group', 'root'),
         'mode': '0644',
         'triggers': [
-            'action:systemctl-daemon-reload',
+            'action:systemd-unit_systemctl-daemon-reload',
             f'svc_systemd:{name}:reload'
         ],
         'tags': [
@@ -37,6 +37,6 @@ for name, config in node.metadata.get('systemd-unit', {}).items():
         'running': config.get('running', True),
         'enabled': config.get('enabled', True),
         'needs': [
-            'action:systemctl-daemon-reload',
+            'action:systemd-unit_systemctl-daemon-reload',
         ],
     }
